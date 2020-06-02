@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ryzokuken/temporal-tai/issues"
   },
-  "homepage": "https://github.com/ryzokuken/temporal-tai#readme"
+  "homepage": "https://github.com/ryzokuken/temporal-tai#readme",
+  "dependencies": {
+    "proposal-temporal": "github:tc39/proposal-temporal#main"
+  }
 }
