@@ -16,7 +16,7 @@ export default class TAI extends Temporal.TimeZone {
     const abs = Temporal.TimeZone.from('UTC').getAbsoluteFor(dt); // There's no DST in UTC
     const nanos = abs.getEpochNanoseconds();
     const millis = abs.getEpochMilliseconds();
-    const precision = nanos % BigInt(millis);
+    const precision = nanos % 1_000_000n;
     const tais = tai.convert.oneToMany.unixToAtomic(millis);
     return tais.map(tai => { return new Temporal.Absolute(BigInt(tai * 1e6) + precision) });
   }
@@ -24,7 +24,7 @@ export default class TAI extends Temporal.TimeZone {
   getDateTimeFor(abs) {
     const nanos = abs.getEpochNanoseconds();
     const millis = abs.getEpochMilliseconds();
-    const precision = nanos % BigInt(millis);
+    const precision = nanos % 1_000_000n;
     const utc = tai.convert.oneToMany.atomicToUnix(millis);
     return Temporal.TimeZone.from('UTC').getDateTimeFor(new Temporal.Absolute(BigInt(utc) + precision));
   }
