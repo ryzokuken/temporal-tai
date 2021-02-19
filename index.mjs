@@ -27,8 +27,8 @@ export default class TAI extends Temporal.TimeZone {
     const nanos = instant.epochNanoseconds;
     const millis = instant.epochMilliseconds;
     const precision = nanos % 1_000_000n;
-    const tais = tai.oneToMany.unixToAtomic(millis);
-    return tais.map(tai => new Temporal.Instant(BigInt(tai * 1e6) + precision));
+    const tais = tai.oneToMany.unixToAtomicPicos(millis);
+    return tais.map(tai => new Temporal.Instant(tai / 1000n + precision));
   }
 
   getPlainDateTimeFor(instant) {
