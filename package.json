@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/ryzokuken/temporal-tai#readme",
   "dependencies": {
-    "proposal-temporal": "github:tc39/proposal-temporal#main",
+    "proposal-temporal": "^0.7.0",
     "t-a-i": "^1.0.15"
   }
 }

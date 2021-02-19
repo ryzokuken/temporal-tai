@@ -1,18 +1,18 @@
 import {strict as assert} from 'assert';
 
-import * as Temporal from 'proposal-temporal/polyfill/lib/temporal.mjs';
+import { Temporal } from 'proposal-temporal/lib/index.mjs';
 
 import TAI from './index.mjs';
 
 const tai = new TAI();
 const disambiguation = { disambiguation: 'later' };
 
-const dt1 = Temporal.DateTime.from('1972-01-01T00:00:00');
-const dt2 = Temporal.DateTime.from('1973-01-01T00:00:00');
-assert.equal(dt1.inTimeZone('UTC').difference(dt2.inTimeZone('UTC')).toString(), 'PT31622400S');
-assert.equal(dt1.inTimeZone(tai, disambiguation).difference(dt2.inTimeZone(tai, disambiguation)).toString(), 'PT31622402S');
+const pdt1 = Temporal.PlainDateTime.from('1972-01-01T00:00:00');
+const pdt2 = Temporal.PlainDateTime.from('1973-01-01T00:00:00');
+assert.equal(pdt1.toZonedDateTime('UTC').until(pdt2.toZonedDateTime('UTC'), { largestUnit: 'seconds' }).toString(), 'PT31622400S');
+assert.equal(pdt1.toZonedDateTime(tai, disambiguation).until(pdt2.toZonedDateTime(tai, disambiguation), { largestUnit: 'seconds' }).toString(), 'PT31622402S');
 
-const abs1 = new Temporal.Absolute(915148831000n * 1_000_000n);
-const abs2 = new Temporal.Absolute(915148832000n * 1_000_000n);
-assert.notEqual(abs1.inTimeZone('UTC').toString(), abs2.inTimeZone('UTC').toString());
-assert.equal(abs1.inTimeZone(tai).toString(), abs2.inTimeZone(tai).toString());
+const instant1 = new Temporal.Instant(915148831000n * 1_000_000n);
+const instant2 = new Temporal.Instant(915148832000n * 1_000_000n);
+assert.notEqual(instant1.toZonedDateTimeISO('UTC').toString(), instant2.toZonedDateTimeISO('UTC').toString());
+assert.equal(instant1.toZonedDateTimeISO(tai).toString(), instant2.toZonedDateTimeISO(tai).toString());
